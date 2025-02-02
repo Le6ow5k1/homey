@@ -1,0 +1,5 @@
+= turbo_stream.prepend "conversation_history" do
+  = render Conversation::CommentComponent.new(comment: @comment)
+
+= turbo_stream.replace "new_comment_form" do
+  = render Conversation::CommentFormComponent.new(project: @project) 

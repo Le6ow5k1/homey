@@ -1,0 +1,9 @@
+= turbo_stream.prepend "conversation_history" do
+  = render Conversation::StatusChangeComponent.new(status_change: @status_change)
+
+= turbo_stream.replace "status_change_form" do
+  = render Conversation::StatusChangeFormComponent.new(project: @project)
+
+= turbo_stream.replace "project_status" do
+  span.inline-flex.items-center.rounded-md.px-2.py-1.text-xs.font-medium[class=status_color(@project.status)]
+    = @project.status.humanize

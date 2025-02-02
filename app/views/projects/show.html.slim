@@ -1,0 +1,18 @@
+div.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.py-8
+  div.sm:flex.sm:items-center
+    div.sm:flex-auto
+      div.flex.items-center.gap-x-3
+        = link_to projects_path, class: "text-gray-400 hover:text-gray-500" do
+          = icon "arrow-left", class: "w-5 h-5"
+        h1.text-2xl.font-semibold.text-gray-900
+          = @project.name
+        span#project_status.inline-flex.items-center.rounded-md.px-2.py-1.text-xs.font-medium[class=status_color(@project.status)]
+          = @project.status.humanize
+
+  - if @project.description.present?
+    div.mt-4.text-gray-500
+      = @project.description
+
+  div.mt-8
+    = turbo_frame_tag "conversation_history" do
+      = render Conversation::HistoryComponent.new(project: @project) 

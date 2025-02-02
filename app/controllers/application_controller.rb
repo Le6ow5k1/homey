@@ -1,4 +1,13 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  helper_method :current_user
+
+  private
+
+  def current_user
+    # For development purposes, always return the first user or create one if none exists
+    @current_user ||= User.first_or_create!(
+      name: 'Test User',
+      email: 'test@example.com'
+    )
+  end
 end

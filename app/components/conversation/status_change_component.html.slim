@@ -1,0 +1,19 @@
+div.bg-white.rounded-lg.shadow.p-4
+  div.flex.items-start.space-x-3
+    div.flex-shrink-0
+      = image_tag "https://placehold.co/100x100", class: "h-10 w-10 rounded-full"
+    div.flex-grow
+      div.flex.items-center.justify-between
+        p.text-sm.font-medium.text-gray-900
+          = status_change.user.name
+        p.text-sm.text-gray-500
+          = time_ago_in_words(status_change.created_at)
+      div.mt-1
+        p.text-sm.text-gray-700
+          | Changed status from 
+          span.font-medium = status_change.previous_status.humanize
+          |  to 
+          span.font-medium = status_change.new_status.humanize
+        - if status_change.change_reason.present?
+          p.mt-1.text-sm.text-gray-600
+            = status_change.change_reason 
