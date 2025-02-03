@@ -1,19 +1,24 @@
-div.bg-white.rounded-lg.shadow.p-4
+div.bg-white.border-l-4.border-blue-300.pl-3.py-4
   div.flex.items-start.space-x-3
     div.flex-shrink-0
-      = image_tag "https://placehold.co/100x100", class: "h-10 w-10 rounded-full"
+      = image_tag "https://placehold.co/100x100", class: "h-8 w-8 rounded-full"
     div.flex-grow
       div.flex.items-center.justify-between
-        p.text-sm.font-medium.text-gray-900
-          = status_change.user.name
+        div.flex.items-center.gap-x-2
+          = icon "arrows-right-left", class: "h-4 w-4 text-blue-500"
+          p.text-sm.font-medium.text-gray-900
+            = status_change.user.name
         p.text-sm.text-gray-500
           = time_ago_in_words(status_change.created_at)
+          |  ago
       div.mt-1
         p.text-sm.text-gray-700
           | Changed status from 
-          span.font-medium = status_change.previous_status.humanize
+          span.inline-flex.items-center.rounded-md.px-2.py-1.text-xs.font-medium[class=status_color(status_change.previous_status)]
+            = status_change.previous_status.humanize
           |  to 
-          span.font-medium = status_change.new_status.humanize
+          span.inline-flex.items-center.rounded-md.px-2.py-1.text-xs.font-medium[class=status_color(status_change.new_status)]
+            = status_change.new_status.humanize
         - if status_change.change_reason.present?
-          p.mt-1.text-sm.text-gray-600
+          p.mt-1.text-sm.text-gray-600.italic
             = status_change.change_reason 

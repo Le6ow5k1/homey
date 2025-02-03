@@ -1,9 +1,12 @@
 class CommentsController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
-    @comment = @project.comments.build(comment_params)
+    @activity = @project.activities.build(
+      user: current_user,
+      subject: Comment.new(comment_params.merge(project: @project, user: current_user))
+    )
 
-    if @comment.save
+    if @activity.save
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to @project, notice: 'Comment was successfully added.' }
@@ -14,7 +17,7 @@ class CommentsController < ApplicationController
           render turbo_stream: turbo_stream.replace(
             'new_comment_form',
             partial: 'comments/form',
-            locals: { project: @project, comment: @comment }
+            locals: { project: @project, activity: @activity }
           )
         }
         format.html { redirect_to @project, alert: 'Unable to add comment.' }
@@ -25,6 +28,6 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:content).merge(user: current_user)
+    params.require(:comment).permit(:content)
   end
 end 

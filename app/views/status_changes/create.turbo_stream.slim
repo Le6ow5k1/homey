@@ -1,5 +1,6 @@
-= turbo_stream.prepend "conversation_history" do
-  = render Conversation::StatusChangeComponent.new(status_change: @status_change)
+= turbo_stream.prepend "activity_feed" do
+  div.border-b.border-gray-200.bg-white.px-4.py-5.sm:px-6
+    = render Conversation::StatusChangeComponent.new(status_change: @activity.subject)
 
 = turbo_stream.replace "status_change_form" do
   = render Conversation::StatusChangeFormComponent.new(project: @project)

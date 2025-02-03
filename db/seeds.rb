@@ -37,18 +37,22 @@ projects.each do |project_data|
   project = Project.create!(project_data)
   
   # Add some sample comments
-  project.comments.create!(
+  project.activities.create!(
     user: user,
-    content: 'Initial project setup completed'
+    subject: Comment.new(content: 'Initial project setup completed', project: project, user: user)
   )
   
   # Add a status change
   if project.status != 'open'
-    project.status_changes.create!(
+    project.activities.create!(  
       user: user,
-      previous_status: 'open',
-      new_status: project.status,
-      change_reason: "Moving project to #{project.status}"
+      subject: StatusChange.new(
+        previous_status: 'open',
+        new_status: project.status,
+        change_reason: "Moving project to #{project.status}",
+        project: project,
+        user: user
+      )
     )
   end
 end

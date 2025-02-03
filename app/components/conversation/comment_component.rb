@@ -1,4 +1,7 @@
 class Conversation::CommentComponent < ViewComponent::Base
+  include ApplicationHelper
+  include ProjectsHelper
+
   def initialize(comment:)
     @comment = comment
   end

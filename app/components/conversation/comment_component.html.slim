@@ -1,12 +1,15 @@
-div.bg-white.rounded-lg.shadow.p-4
+div.bg-white.border-l-4.border-gray-300.pl-3.py-4
   div.flex.items-start.space-x-3
     div.flex-shrink-0
-      = image_tag "https://placehold.co/100x100", class: "h-10 w-10 rounded-full"
+      = image_tag "https://placehold.co/100x100", class: "h-8 w-8 rounded-full"
     div.flex-grow
       div.flex.items-center.justify-between
-        p.text-sm.font-medium.text-gray-900
-          = comment.user.name
+        div.flex.items-center.gap-x-2
+          = icon "chat-bubble-left", class: "h-4 w-4 text-gray-400"
+          p.text-sm.font-medium.text-gray-900
+            = comment.user.name
         p.text-sm.text-gray-500
           = time_ago_in_words(comment.created_at)
+          |  ago
       div.mt-1.text-sm.text-gray-700
         = comment.content 

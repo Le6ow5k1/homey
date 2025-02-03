@@ -1,21 +1,21 @@
-div#status_change_form.mt-6
+div#status_change_form.mt-6.bg-white
   = form_with model: [project, status_change], class: "space-y-4" do |f|
     div
-      = f.label :new_status, "Change status", class: "block text-sm font-medium text-gray-700"
-      div.mt-1
+      = f.label :new_status, "Change status", class: "block text-sm font-medium leading-6 text-gray-900"
+      div.mt-2
         = f.select :new_status,
                   Project.statuses.keys.map { |s| [s.humanize, s] },
                   { selected: project.status },
-                  class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                  class: "block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6"
     
     div
-      = f.label :change_reason, "Reason for change (optional)", class: "block text-sm font-medium text-gray-700"
-      div.mt-1
+      = f.label :change_reason, "Reason for change (optional)", class: "block text-sm font-medium leading-6 text-gray-900"
+      div.mt-2
         = f.text_area :change_reason,
                       rows: 2,
-                      class: "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md",
+                      class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6",
                       placeholder: "Explain why you're changing the status..."
     
     div.flex.justify-end
       = f.submit "Update status",
-                class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" 
+                class: "rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600" 

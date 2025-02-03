@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
   has_many :comments
   has_many :status_changes
+  has_many :activities, class_name: 'ProjectActivity'
   
   validates :name, presence: true
   validates :status, presence: true
@@ -12,18 +13,18 @@ class Project < ApplicationRecord
     completed: 'completed'
   }, _prefix: true
 
-  def conversation_history(page: 1, per_page: 10)
-    events = (comments + status_changes)
-      .sort_by(&:created_at)
-      .reverse
-
-    total_pages = (events.length.to_f / per_page).ceil
-    start_idx = (page - 1) * per_page
+  def activity_feed(page: 1, per_page: 10)
+    page = [page.to_i, 1].max
+    offset_value = (page - 1) * per_page
+    total_count = activities.count
     
     {
-      events: events[start_idx, per_page] || [],
+      activities: activities.newest_first
+                          .includes(:user, :subject)
+                          .limit(per_page)
+                          .offset(offset_value),
       current_page: page,
-      total_pages: total_pages
+      total_pages: (total_count.to_f / per_page).ceil
     }
   end
 end 

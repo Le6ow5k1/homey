@@ -1,11 +1,14 @@
 class StatusChangesController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
-    @status_change = @project.status_changes.build(status_change_params)
-    @status_change.previous_status = @project.status
+    @activity = @project.activities.build(
+      user: current_user,
+      subject: StatusChange.new(status_change_params.merge(previous_status: @project.status, project: @project, user: current_user))
+    )
 
-    if @status_change.save
-      @project.update!(status: @status_change.new_status)
+    if @activity.save
+      @project.update!(status: @activity.subject.new_status)
+
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to @project, notice: 'Project status was successfully updated.' }
@@ -16,7 +19,7 @@ class StatusChangesController < ApplicationController
           render turbo_stream: turbo_stream.replace(
             'status_change_form',
             partial: 'status_changes/form',
-            locals: { project: @project, status_change: @status_change }
+            locals: { project: @project, activity: @activity }
           )
         }
         format.html { redirect_to @project, alert: 'Unable to update project status.' }
@@ -27,8 +30,6 @@ class StatusChangesController < ApplicationController
   private
 
   def status_change_params
-    params.require(:status_change)
-          .permit(:new_status, :change_reason)
-          .merge(user: current_user)
+    params.require(:status_change).permit(:new_status, :change_reason)
   end
 end 

@@ -5,8 +5,5 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
-    @history = @project.conversation_history(
-      page: params[:page].to_i.positive? ? params[:page].to_i : 1
-    )
   end
 end 

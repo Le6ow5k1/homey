@@ -1,0 +1,21 @@
+div data-controller="infinite-scroll"
+  div.bg-white
+    div.border-b.border-gray-200.bg-white.px-4.py-5.sm:px-6
+      = render Conversation::CommentFormComponent.new(project: project)
+      = render Conversation::StatusChangeFormComponent.new(project: project)
+      
+    = turbo_frame_tag "activity_feed" do
+      div#activity_feed data-infinite-scroll-target="container"
+        - activity_feed[:activities].each do |activity|
+          div.border-b.border-gray-200.bg-white.px-4.py-5.sm:px-6
+            - if activity.subject.is_a?(Comment)
+              = render Conversation::CommentComponent.new(comment: activity.subject)
+            - elsif activity.subject.is_a?(StatusChange)
+              = render Conversation::StatusChangeComponent.new(status_change: activity.subject)
+
+      - if activity_feed[:current_page] < activity_feed[:total_pages]
+        div.bg-white.px-4.py-5.sm:px-6 data-infinite-scroll-target="trigger"
+          = link_to "Load more", 
+                    project_path(project, page: activity_feed[:current_page] + 1),
+                    class: "text-blue-600 hover:text-blue-800",
+                    data: { turbo_frame: "activity_feed" } 
