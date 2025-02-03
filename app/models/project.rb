@@ -20,7 +20,7 @@ class Project < ApplicationRecord
     
     {
       activities: activities.newest_first
-                          .includes(:user, :subject)
+                          .includes(subject: [:user])
                           .limit(per_page)
                           .offset(offset_value),
       current_page: page,

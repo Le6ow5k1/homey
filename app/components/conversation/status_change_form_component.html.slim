@@ -6,15 +6,21 @@ div#status_change_form.mt-6.bg-white
         = f.select :new_status,
                   Project.statuses.keys.map { |s| [s.humanize, s] },
                   { selected: project.status },
-                  class: "block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  class: "block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset #{status_change.errors[:new_status].any? ? 'ring-red-500' : 'ring-gray-300'} focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6"
+        - if status_change.errors[:new_status].any?
+          div.mt-2.text-sm.text-red-600
+            = status_change.errors[:new_status].join(", ")
     
     div
       = f.label :change_reason, "Reason for change (optional)", class: "block text-sm font-medium leading-6 text-gray-900"
       div.mt-2
         = f.text_area :change_reason,
                       rows: 2,
-                      class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6",
+                      class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset #{status_change.errors[:change_reason].any? ? 'ring-red-500' : 'ring-gray-300'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6",
                       placeholder: "Explain why you're changing the status..."
+        - if status_change.errors[:change_reason].any?
+          div.mt-2.text-sm.text-red-600
+            = status_change.errors[:change_reason].join(", ")
     
     div.flex.justify-end
       = f.submit "Update status",

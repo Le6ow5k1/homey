@@ -3,8 +3,7 @@ class ProjectActivity < ApplicationRecord
   belongs_to :user
   belongs_to :subject, polymorphic: true
 
-  scope :newest_first, -> { order(created_at: :desc) }
+  validates_associated :subject
 
-  delegate :content, to: :subject, allow_nil: true
-  delegate :previous_status, :new_status, :change_reason, to: :subject, allow_nil: true
+  scope :newest_first, -> { order(created_at: :desc) }
 end

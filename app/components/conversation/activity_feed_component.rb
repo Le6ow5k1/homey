@@ -1,9 +1,9 @@
 class Conversation::ActivityFeedComponent < ViewComponent::Base
   include Turbo::FramesHelper
 
-  def initialize(project:, page: 1)
+  def initialize(project:, current_page:)
     @project = project
-    @activity_feed = project.activity_feed(page:)
+    @activity_feed = project.activity_feed(page: current_page)
   end
 
   private

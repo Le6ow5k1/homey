@@ -16,8 +16,10 @@ class CommentsController < ApplicationController
         format.turbo_stream { 
           render turbo_stream: turbo_stream.replace(
             'new_comment_form',
-            partial: 'comments/form',
-            locals: { project: @project, activity: @activity }
+            Conversation::CommentFormComponent.new(
+              project: @project, 
+              comment: @activity.subject
+            )
           )
         }
         format.html { redirect_to @project, alert: 'Unable to add comment.' }

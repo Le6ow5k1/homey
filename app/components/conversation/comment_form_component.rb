@@ -1,7 +1,7 @@
 class Conversation::CommentFormComponent < ViewComponent::Base
-  def initialize(project:)
+  def initialize(project:, comment: nil)
     @project = project
-    @comment = project.comments.build
+    @comment = comment || project.comments.build
   end
 
   private

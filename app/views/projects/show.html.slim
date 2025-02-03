@@ -17,4 +17,10 @@ div.px-4.sm:px-6.lg:px-8.py-8
     div.-mx-4.-my-2.overflow-x-auto.sm:-mx-6.lg:-mx-8
       div.inline-block.w-full.py-2.align-middle.sm:px-6.lg:px-8
         div.overflow-hidden.shadow.ring-1.ring-black.ring-opacity-5.sm:rounded-lg
-          = render Conversation::ActivityFeedComponent.new(project: @project)
+          div
+            div.bg-white
+              div.border-b.border-gray-200.bg-white.px-4.py-5.sm:px-6
+                = render Conversation::CommentFormComponent.new(project: @project)
+                = render Conversation::StatusChangeFormComponent.new(project: @project)
+          
+              = render Conversation::ActivityFeedComponent.new(project: @project, current_page: @page)
