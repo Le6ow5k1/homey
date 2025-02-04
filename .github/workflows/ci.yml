@@ -15,6 +15,7 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+          cache-version: 1
       - uses: reviewdog/action-rubocop@v2
         with:
           reporter: github-pr-review
