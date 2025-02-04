@@ -1,9 +1,9 @@
 = turbo_stream.prepend "activity_feed" do
   div.border-b.border-gray-200.bg-white.px-4.py-5.sm:px-6
-    = render Conversation::StatusChangeComponent.new(status_change: @activity.subject)
+    = render StatusChangeComponent.new(status_change: @activity.subject)
 
 = turbo_stream.replace "status_change_form" do
-  = render Conversation::StatusChangeFormComponent.new(project: @project)
+  = render StatusChangeFormComponent.new(project: @project)
 
 = turbo_stream.replace "project_status" do
   span.inline-flex.items-center.rounded-md.px-2.py-1.text-xs.font-medium[class=status_color(@project.status)]

@@ -21,7 +21,7 @@ class StatusChangesController < ApplicationController
         format.turbo_stream {
           render turbo_stream: turbo_stream.replace(
             'status_change_form',
-            Conversation::StatusChangeFormComponent.new(
+            StatusChangeFormComponent.new(
               project: @project,
               status_change: @activity.subject
             )

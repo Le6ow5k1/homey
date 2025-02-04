@@ -1,4 +1,4 @@
-class Conversation::CommentFormComponent < ViewComponent::Base
+class CommentFormComponent < ViewComponent::Base
   def initialize(project:, comment: nil)
     @project = project
     @comment = comment || project.comments.build

@@ -1,4 +1,4 @@
-class Conversation::StatusChangeComponent < ViewComponent::Base
+class StatusChangeComponent < ViewComponent::Base
   include ApplicationHelper
   include ProjectsHelper
   

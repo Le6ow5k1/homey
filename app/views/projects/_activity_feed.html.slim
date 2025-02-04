@@ -1,6 +1,0 @@
-- activity_feed[:activities].each do |activity|
-  div.border-b.border-gray-200.bg-white.px-4.py-5.sm:px-6
-    - if activity.subject.is_a?(Comment)
-      = render Conversation::CommentComponent.new(comment: activity.subject)
-    - elsif activity.subject.is_a?(StatusChange)
-      = render Conversation::StatusChangeComponent.new(status_change: activity.subject)

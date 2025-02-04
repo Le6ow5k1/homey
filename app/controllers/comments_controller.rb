@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
         format.turbo_stream { 
           render turbo_stream: turbo_stream.replace(
             'new_comment_form',
-            Conversation::CommentFormComponent.new(
+            CommentFormComponent.new(
               project: @project, 
               comment: @activity.subject
             )

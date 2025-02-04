@@ -1,4 +1,4 @@
-class Conversation::StatusChangeFormComponent < ViewComponent::Base
+class StatusChangeFormComponent < ViewComponent::Base
   def initialize(project:, status_change: nil)
     @project = project
     @status_change = status_change || project.status_changes.build

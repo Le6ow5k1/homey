@@ -1,10 +1,10 @@
+- activity_feed = ActivityFeedComponent.new(project: @project, current_page: @page)
 = turbo_stream.append "activity_feed" do
-  = render partial: "projects/activity_feed",
-          locals: { activity_feed: @activity_feed, project: @project }
+  = render activity_feed
 
 = turbo_stream.update "load_more" do
-  - if @activity_feed[:current_page] < @activity_feed[:total_pages]
+  - if activity_feed.current_page < activity_feed.total_pages
     = link_to "Load more", 
-              project_path(@project, page: @activity_feed[:current_page] + 1, format: :turbo_stream),
+              project_path(@project, page: activity_feed.current_page + 1, format: :turbo_stream),
               class: "text-blue-600 hover:text-blue-800",
               data: { turbo_frame: "activity_feed" } 

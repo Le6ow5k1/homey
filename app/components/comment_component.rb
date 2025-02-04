@@ -1,4 +1,4 @@
-class Conversation::CommentComponent < ViewComponent::Base
+class CommentComponent < ViewComponent::Base
   include ApplicationHelper
   include ProjectsHelper
 
