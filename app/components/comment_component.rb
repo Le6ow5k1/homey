@@ -9,4 +9,4 @@ class CommentComponent < ViewComponent::Base
   private
 
   attr_reader :comment
-end 
+end

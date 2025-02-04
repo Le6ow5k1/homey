@@ -1,7 +1,7 @@
 class StatusChangeComponent < ViewComponent::Base
   include ApplicationHelper
   include ProjectsHelper
-  
+
   def initialize(status_change:)
     @status_change = status_change
   end
@@ -9,4 +9,4 @@ class StatusChangeComponent < ViewComponent::Base
   private
 
   attr_reader :status_change
-end 
+end

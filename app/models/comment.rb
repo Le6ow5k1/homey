@@ -4,8 +4,8 @@ class Comment < ApplicationRecord
   has_one :activity, as: :subject, dependent: :destroy
 
   validates :content, presence: true
-  
+
   def event_type
     'comment'
   end
-end 
+end

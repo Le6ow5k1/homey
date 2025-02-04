@@ -7,4 +7,4 @@ class StatusChangeFormComponent < ViewComponent::Base
   private
 
   attr_reader :project, :status_change
-end 
+end

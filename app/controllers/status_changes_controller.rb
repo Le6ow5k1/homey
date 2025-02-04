@@ -4,10 +4,10 @@ class StatusChangesController < ApplicationController
     @activity = @project.activities.build(
       user: current_user,
       subject: StatusChange.new(status_change_params.merge(
-        previous_status: @project.status,
-        project: @project,
-        user: current_user
-      ))
+                                  previous_status: @project.status,
+                                  project: @project,
+                                  user: current_user
+                                ))
     )
 
     if @activity.save
@@ -18,7 +18,7 @@ class StatusChangesController < ApplicationController
       end
     else
       respond_to do |format|
-        format.turbo_stream {
+        format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
             'status_change_form',
             StatusChangeFormComponent.new(
@@ -26,7 +26,7 @@ class StatusChangesController < ApplicationController
               status_change: @activity.subject
             )
           )
-        }
+        end
         format.html { redirect_to @project, alert: 'Unable to update project status.' }
       end
     end
@@ -37,4 +37,4 @@ class StatusChangesController < ApplicationController
   def status_change_params
     params.require(:status_change).permit(:new_status, :change_reason)
   end
-end 
+end

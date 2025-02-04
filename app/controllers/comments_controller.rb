@@ -13,15 +13,15 @@ class CommentsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.turbo_stream { 
+        format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
             'new_comment_form',
             CommentFormComponent.new(
-              project: @project, 
+              project: @project,
               comment: @activity.subject
             )
           )
-        }
+        end
         format.html { redirect_to @project, alert: 'Unable to add comment.' }
       end
     end
@@ -32,4 +32,4 @@ class CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(:content)
   end
-end 
+end

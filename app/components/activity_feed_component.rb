@@ -21,9 +21,9 @@ class ActivityFeedComponent < ViewComponent::Base
 
   def activities
     @activities ||= project.activities
-           .order(created_at: :desc) 
-           .includes(subject: [:user])
-           .limit(per_page)
-           .offset((page - 1) * per_page)
+                           .order(created_at: :desc)
+                           .includes(subject: [:user])
+                           .limit(per_page)
+                           .offset((page - 1) * per_page)
   end
-end 
+end

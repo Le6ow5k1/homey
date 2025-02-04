@@ -7,4 +7,4 @@ class CommentFormComponent < ViewComponent::Base
   private
 
   attr_reader :project, :comment
-end 
+end
