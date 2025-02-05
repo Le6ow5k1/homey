@@ -1,20 +1,17 @@
 class StatusChangesController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
-    @activity = @project.activities.build(
+    result = CreateStatusChangeActivity.call(
+      project: @project,
       user: current_user,
-      subject: StatusChange.new(status_change_params.merge(
-                                  previous_status: @project.status,
-                                  project: @project,
-                                  user: current_user
-                                ))
+      status_change_params: status_change_params
     )
+    @activity = result[:activity]
 
-    if @activity.save
-      @project.update!(status: @activity.subject.new_status)
+    if result[:success]
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to @project, notice: 'Project status was successfully updated.' }
+        format.html { redirect_to @activity.project, notice: 'Project status was successfully updated.' }
       end
     else
       respond_to do |format|
@@ -22,12 +19,12 @@ class StatusChangesController < ApplicationController
           render turbo_stream: turbo_stream.replace(
             'status_change_form',
             StatusChangeFormComponent.new(
-              project: @project,
+              project: @activity.project,
               status_change: @activity.subject
             )
           )
         end
-        format.html { redirect_to @project, alert: 'Unable to update project status.' }
+        format.html { redirect_to @activity.project, alert: 'Unable to update project status.' }
       end
     end
   end

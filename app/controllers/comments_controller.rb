@@ -1,15 +1,13 @@
 class CommentsController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
-    @activity = @project.activities.build(
-      user: current_user,
-      subject: Comment.new(comment_params.merge(project: @project, user: current_user))
-    )
+    result = CreateCommentActivity.call(project: @project, user: current_user, comment_params: comment_params)
+    @activity = result[:activity]
 
-    if @activity.save
+    if result[:success]
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to @project, notice: 'Comment was successfully added.' }
+        format.html { redirect_to @activity.project, notice: 'Comment was successfully added.' }
       end
     else
       respond_to do |format|
@@ -17,7 +15,7 @@ class CommentsController < ApplicationController
           render turbo_stream: turbo_stream.replace(
             'new_comment_form',
             CommentFormComponent.new(
-              project: @project,
+              project: @activity.project,
               comment: @activity.subject
             )
           )
