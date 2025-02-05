@@ -34,7 +34,8 @@ projects = [
 ]
 
 projects.each do |project_data|
-  project = Project.create!(project_data)
+  project = Project.find_by(name: project_data[:name])
+  project ||= Project.create!(project_data)
   
   # Add some sample comments
   project.activities.create!(

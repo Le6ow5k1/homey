@@ -1,7 +1,7 @@
 class StatusChange < ApplicationRecord
   belongs_to :project
   belongs_to :user
-  has_one :activity, as: :subject, dependent: :destroy
+  has_one :activity, class_name: 'ProjectActivity', as: :subject, dependent: :destroy
 
   validates :previous_status, :new_status, presence: true
   validate :status_actually_changed
