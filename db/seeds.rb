@@ -37,6 +37,10 @@ projects.each do |project_data|
   project = Project.find_by(name: project_data[:name])
   project ||= Project.create!(project_data)
   
+  project.comments.destroy_all
+  project.status_changes.destroy_all
+  project.activities.destroy_all
+  
   # Add some sample comments
   project.activities.create!(
     user: user,
